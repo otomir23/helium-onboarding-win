@@ -3,7 +3,11 @@
 set -e
 
 rm -rf node_modules
-npm install --no-bin-links
+
+pnpm install \
+    --frozen-lockfile \
+    --verify-store-integrity \
+    --shamefully-hoist
 
 TAR=gtar
 if ! command -v gtar 2>&1 >/dev/null
@@ -20,13 +24,14 @@ find . -print0 \
         --numeric-owner \
         --owner=0 \
         --group=0 \
-        --mode="go-rwx,u-rw" \
+        --preserve-permissions \
         --mtime='1970-01-01' \
         --no-recursion \
         --null \
         --files-from -
 
 popd
+
 du -sh node_modules
 ls -lh node_modules.tar.gz
-
+rm -rf node_modules
