@@ -1,0 +1,63 @@
+import("//tools/grit/grit_rule.gni")
+
+action("build") {
+    script = "//third_party/node/node.py"
+    dist_dir = "$target_gen_dir/dist"
+
+    args = [
+        rebase_path("node_modules/vite/bin/vite.js"),
+        "build",
+        rebase_path("."),
+        "--outDir",
+        rebase_path(dist_dir)
+    ]
+
+    inputs = [
+        "index.html",
+        "src",
+        "public",
+        "package.json",
+        "vite.config.ts",
+        "svelte.config.js",
+    ]
+
+    outputs = [ "$dist_dir" ]
+}
+
+action("grit") {
+    script = "//third_party/node/node.py"
+    node_script = "./util/generate-grd.mjs"
+    dist_dir = "$target_gen_dir/dist"
+
+    args = [
+        rebase_path(node_script),
+        rebase_path(dist_dir),
+        rebase_path("$target_gen_dir/resources.grd")
+    ]
+
+    inputs = [
+        node_script,
+        "$dist_dir"
+    ]
+
+    outputs = [ "$target_gen_dir/resources.grd" ]
+    deps = [ ":build" ]
+}
+
+grit("generated_resources") {
+    source = "$target_gen_dir/resources.grd"
+
+    # Required because the .grd is generated.
+    enable_input_discovery_for_gn_analyze = false
+
+    output_dir = "$target_gen_dir/resources"
+
+    outputs = [
+        "grit/helium_onboarding_generated.h",
+        "grit/helium_onboarding_generated_map.cc",
+        "grit/helium_onboarding_generated_map.h",
+        "helium_onboarding_generated.pak"
+    ]
+
+    deps = [":grit"]
+}
