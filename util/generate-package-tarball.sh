@@ -2,6 +2,11 @@
 # inspired by third_party/node/update_npm_deps
 set -e
 
+if ! [ -f package.json ]; then
+    echo "this script must be run in the repo root" >&2
+    exit 1
+fi
+
 rm -rf node_modules
 
 pnpm install \
