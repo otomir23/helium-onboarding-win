@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 node_modules.out
-node_modules.tar.gz
+*.tar.gz
 dist
 dist-ssr
 *.local
