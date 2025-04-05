@@ -26,10 +26,11 @@ action("build") {
 
 action("grit") {
     script = "//third_party/node/node.py"
-    node_script = "./util/generate-grd.mjs"
+    node_script = "./util/generate-grd.mts"
     dist_dir = "$target_gen_dir/dist"
 
     args = [
+        "--experimental-strip-types",
         rebase_path(node_script),
         rebase_path(dist_dir),
         rebase_path("$target_gen_dir/resources.grd")

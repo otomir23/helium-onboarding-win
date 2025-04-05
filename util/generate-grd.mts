@@ -6,7 +6,7 @@ if (process.argv.length !== 4) {
     process.exit(1);
 }
 
-async function* walk(path) {
+async function* walk(path: string): AsyncGenerator<string> {
     const entries = await readdir(path);
 
     for (const entry of entries) {
@@ -21,7 +21,7 @@ async function* walk(path) {
     }
 }
 
-const to_identifier = (path) => {
+const to_identifier = (path: string) => {
     const prefix = 'IDR_HELIUM_ONBOARDING_';
 
     return prefix + path.replaceAll('/', '_')
@@ -30,7 +30,7 @@ const to_identifier = (path) => {
         .toUpperCase();
 }
 
-const check = (str) => {
+const check = (str: string) => {
     if (/[<>&'"]/g.test(str)) {
         throw "filename contains invalid characters: " + str;
     }
@@ -41,7 +41,7 @@ const check = (str) => {
 const generate = async () => {
     const dist_dir = process.argv[2];
     const grd_out = process.argv[3];
-    const includes = [];
+    const includes: string[] = [];
 
     for await (const path of walk(dist_dir)) {
         const relative_path = path.replace(/.*dist\//, '');
