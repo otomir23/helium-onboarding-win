@@ -30,7 +30,6 @@ make() {
     find . -print0 \
         | sort -z \
         | GZIP="-9n" $TAR -zcf "../$OUT_FILE.tar.gz" \
-            --sort=name \
             --format=posix \
             --numeric-owner \
             --owner=0 \
