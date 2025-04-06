@@ -15,7 +15,8 @@ make() {
     pnpm install \
         --frozen-lockfile \
         --verify-store-integrity \
-        --shamefully-hoist
+        --shamefully-hoist \
+        --force
 
     TAR=gtar
     if ! command -v gtar 2>&1 >/dev/null

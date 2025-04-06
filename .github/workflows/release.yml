@@ -21,7 +21,8 @@ jobs:
           pnpm install \
               --frozen-lockfile \
               --verify-store-integrity \
-              --shamefully-hoist
+              --shamefully-hoist \
+              --force
       - name: Remove timestamped files and junk
         run: |
           rm -f node_modules/.modules.yaml node_modules/.pnpm-workspace-state.json
