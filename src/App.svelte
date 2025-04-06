@@ -1,47 +1,57 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import * as Browser from "./lib/browser";
+
+  const completeOnboarding = () => {
+    Browser.markOnboardingComplete();
+    debug += 'markOnboardingComplete() sent\n';
+  }
+
+  const prefs = Browser.getPrefs();
+  let debug = '';
+
+  const handleInput = async (event: Event) => {
+    if (event.target) {
+      const target = event.target as HTMLInputElement;
+      try {
+        await Browser.setPref(
+          target.name as Browser.PrefKey,
+          target.type === 'checkbox' ? target.checked : target.value);
+        debug += `setPref succeeded on ${target.name}\n`;
+      } catch(e) {
+        debug += `err: ${e}\n`;
+      }
+    }
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  {#await prefs}
+    loading prefs...
+  {:then prefs}
+    {#each Object.entries(prefs) as [ pref, val ]}
+      <div>
+        {#if typeof val === 'boolean'}
+          <input type="checkbox" name={pref} checked={val} on:change={handleInput} /> { pref }
+        {:else if typeof val === 'string'}
+          { pref } <input type="text" name={pref} value={val} on:change={handleInput} />
+        {/if}
+        
+      </div>
+    {/each}
+  {/await}
+  <button on:click={completeOnboarding}>send onboarding complete</button>
+  <textarea>{debug}</textarea>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  textarea {
+    display: block;
+    width: 800px;
+    height: 320px;
+    margin-top: 1em;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+
+  * {
+    padding: .5em;
   }
 </style>
