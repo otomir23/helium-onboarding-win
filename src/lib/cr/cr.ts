@@ -6,8 +6,8 @@ declare const chrome: {
   getVariableValue(variable: string): string,
 };
 
-import {assert} from './assert.ts';
-import {PromiseResolver} from './promise_resolver.ts';
+import {assert} from './assert.js';
+import {PromiseResolver} from './promise_resolver.js';
 
 export interface WebUiListener {
   eventName: string;
