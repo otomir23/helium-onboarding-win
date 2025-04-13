@@ -26,11 +26,11 @@ const prefs: Record<string, unknown> = {
 const _send_polyfill = (msg: string, params?: any[]) => {
     if (msg === 'getPrefs') {
         if (params && params[0]) {
-            cr.webUIResponse(params[0], true, {...prefs});
+            cr.webUIResponse(params[0], true, { ...prefs });
         }
     } else if (msg === 'setPref') {
-        const [ id, name, new_val ] = params! as [ string, string, any ];
-    
+        const [id, name, new_val] = params! as [string, string, any];
+
         const cur_val = prefs[name];
         if (typeof name !== 'string') {
             cr.webUIResponse(id, false, 'invalid name');
