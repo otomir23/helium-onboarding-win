@@ -49,16 +49,17 @@
 
 <style>
     #welcome-page {
-        opacity: 0;
         visibility: hidden;
-
-        animation: zoom-blur-out 0.2s;
-        animation-fill-mode: forwards;
 
         &.visible {
             visibility: visible;
-            animation: zoom-blur-in 0.7s;
+            animation: main-zoom-blur-in 0.7s;
             animation-delay: 0.5s;
+            animation-fill-mode: backwards;
+        }
+
+        &:not(.visible) {
+            animation: zoom-blur-out 0.2s;
             animation-fill-mode: forwards;
         }
     }
@@ -106,44 +107,10 @@
         width: 100%;
         left: 0;
 
-        animation: zoom-blur-in 0.6s;
-        animation-delay: 1.2s;
+        animation: main-zoom-blur-in 0.6s;
+        animation-delay: 1s;
         will-change: transform, filter, opacity;
         animation-fill-mode: backwards;
-    }
-
-    @keyframes zoom-blur-in {
-        from {
-            transform: scale(0.75);
-            filter: blur(12px);
-            opacity: 0;
-        }
-        55% {
-            transform: scale(1.015);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes zoom-blur-out {
-        0% {
-            opacity: 1;
-            visibility: visible;
-        }
-        100% {
-            transform: scale(0.9);
-            filter: blur(12px);
-            opacity: 0;
-        }
-        to {
-            visibility: hidden;
-            opacity: 0;
-        }
     }
 
     @media (prefers-reduced-transparency) or (prefers-reduced-motion) {
