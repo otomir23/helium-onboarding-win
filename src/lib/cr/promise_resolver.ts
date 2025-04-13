@@ -17,38 +17,38 @@
  */
 
 export class PromiseResolver<T> {
-    private resolve_: (arg: T) => void = () => { };
-    private reject_: (arg: any) => void = () => { };
+    private resolve_: (arg: T) => void = () => {};
+    private reject_: (arg: any) => void = () => {};
     private isFulfilled_: boolean = false;
     private promise_: Promise<T>;
-
+  
     constructor() {
-        this.promise_ = new Promise((resolve, reject) => {
-            this.resolve_ = (resolution: T) => {
-                resolve(resolution);
-                this.isFulfilled_ = true;
-            };
-            this.reject_ = (reason: any) => {
-                reject(reason);
-                this.isFulfilled_ = true;
-            };
-        });
+      this.promise_ = new Promise((resolve, reject) => {
+        this.resolve_ = (resolution: T) => {
+          resolve(resolution);
+          this.isFulfilled_ = true;
+        };
+        this.reject_ = (reason: any) => {
+          reject(reason);
+          this.isFulfilled_ = true;
+        };
+      });
     }
-
+  
     /** Whether this resolver has been resolved or rejected. */
     get isFulfilled(): boolean {
-        return this.isFulfilled_;
+      return this.isFulfilled_;
     }
-
+  
     get promise(): Promise<T> {
-        return this.promise_;
+      return this.promise_;
     }
-
+  
     get resolve(): ((arg: T) => void) {
-        return this.resolve_;
+      return this.resolve_;
     }
-
+  
     get reject(): ((arg?: any) => void) {
-        return this.reject_;
+      return this.reject_;
     }
-}
+  }
