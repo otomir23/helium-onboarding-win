@@ -1,11 +1,6 @@
 <script lang="ts">
   import * as Browser from "./lib/browser";
 
-  const completeOnboarding = () => {
-    Browser.markOnboardingComplete();
-    debug += 'markOnboardingComplete() sent\n';
-  }
-
   const prefs = Browser.getPrefs();
   let debug = '';
 
@@ -39,7 +34,6 @@
       </div>
     {/each}
   {/await}
-  <button on:click={completeOnboarding}>send onboarding complete</button>
   <textarea>{debug}</textarea>
 </main>
 

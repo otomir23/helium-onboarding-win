@@ -42,18 +42,6 @@ const _send_polyfill = (msg: string, params?: any[]) => {
             prefs[name] = new_val;
             cr.webUIResponse(id, true, null);
         }
-    } else if (msg === 'markOnboardingComplete') {
-        if (!prefs.completed_onboarding) {
-            for (const key in prefs) {
-                if (typeof prefs[key] === 'boolean') {
-                    prefs[key] = true;
-                }
-            }
-        }
-
-        if (params && params[0]) {
-            cr.webUIResponse(params[0], true, null);
-        }
     } else if (params?.[0]) {
         cr.webUIResponse(params[0], false, 'unknown method');
     }
