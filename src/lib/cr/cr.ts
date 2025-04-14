@@ -1,10 +1,6 @@
 // Copyright 2022 The Chromium Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-declare const chrome: {
-  send(message: string, params?: any[]): void,
-  getVariableValue(variable: string): string,
-};
 
 import {assert} from './assert.js';
 import {PromiseResolver} from './promise_resolver.js';
@@ -113,7 +109,7 @@ export function addWebUiListener(
     eventName: string, callback: Function): WebUiListener {
   webUiListenerMap[eventName] = webUiListenerMap[eventName] || {};
   const uid = createUid();
-  webUiListenerMap[eventName][uid] = callback;
+  webUiListenerMap[eventName]![uid] = callback;
   return {eventName: eventName, uid: uid};
 }
 
