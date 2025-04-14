@@ -6,7 +6,7 @@
 
 <button
     class="big"
-    on:click={() => {
+    onclick={() => {
         enabled = !enabled;
     }}
 >

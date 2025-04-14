@@ -8,7 +8,7 @@
     import PageHeader from "../components/PageHeader.svelte";
     import ToggleSeparator from "../components/ToggleSeparator.svelte";
 
-    $: visible = $currentPage === "HeliumServices";
+    const visible = $derived($currentPage === "HeliumServices");
 </script>
 
 <div id="services-page" class="onboarding-page" class:visible>

@@ -13,7 +13,7 @@
         window.open("chrome://newtab", "_self");
     }
 
-    $: visible = $currentPage === "Welcome";
+    const visible = $derived($currentPage === "Welcome");
 </script>
 
 <div
@@ -31,11 +31,11 @@
                 <p>{s.welcome.body}</p>
             </div>
             <div id="welcome-buttons">
-                <button on:click={useDefaults}>
+                <button onclick={useDefaults}>
                     <IconCheck />
                     {s.button.useDefaults}
                 </button>
-                <button class="primary" on:click={nextPage}>
+                <button class="primary" onclick={nextPage}>
                     <IconArrowRight />
                     {s.button.configure}
                 </button>

@@ -5,15 +5,15 @@
     import IconArrowLeft from "../icons/tabler/IconArrowLeft.svelte";
     import IconArrowRight from "../icons/tabler/IconArrowRight.svelte";
 
-    $: visible = $currentPage !== "Welcome" && $currentPage !== "Finish";
+    const visible = $derived($currentPage !== "Welcome" && $currentPage !== "Finish");
 </script>
 
 <div id="setup-buttons" class:visible>
-    <button on:click={previousPage}>
+    <button onclick={previousPage}>
         <IconArrowLeft />
         {s.button.back}
     </button>
-    <button class="primary" on:click={nextPage}>
+    <button class="primary" onclick={nextPage}>
         <IconArrowRight />
         {s.button.next}
     </button>

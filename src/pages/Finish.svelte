@@ -9,7 +9,7 @@
         window.open("chrome://newtab", "_self");
     }
 
-    $: visible = $currentPage === "Finish";
+    const visible = $derived($currentPage === "Finish");
 </script>
 
 <div
@@ -27,7 +27,7 @@
                 <p>{s.finish.body}</p>
             </div>
             <div id="welcome-buttons">
-                <button class="primary" on:click={done}>
+                <button class="primary" onclick={done}>
                     <IconCheck />
                     {s.button.getStarted}
                 </button>

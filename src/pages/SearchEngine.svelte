@@ -5,7 +5,7 @@
     import PageHeader from "../components/PageHeader.svelte";
     import IconSearch from "../icons/tabler/IconSearch.svelte";
 
-    $: visible = $currentPage === "SearchEngine";
+    const visible = $derived($currentPage === "SearchEngine");
 </script>
 
 <div
