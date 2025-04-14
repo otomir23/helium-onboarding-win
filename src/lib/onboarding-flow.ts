@@ -21,7 +21,10 @@ export const currentPage = derived(
 
 export const nextPage = () => {
     update((current) => {
-        return ++current;
+        if (current < flow.length - 1) {
+            ++current;
+        }
+        return current;
     });
 }
 
