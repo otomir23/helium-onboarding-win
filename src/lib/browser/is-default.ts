@@ -3,15 +3,19 @@ import * as cr from "../cr";
 
 let setDefaultBrowser: (_: boolean) => void;
 
-export const isDefaultBrowser = readable(false, (set) => {
-    const browser = cr.DefaultBrowserBrowserProxyImpl.getInstance();
+const browser = cr.DefaultBrowserBrowserProxyImpl.getInstance();
 
+export const isDefaultBrowser = readable(false, (set) => {
     browser.requestDefaultBrowserState().then(
         state => set(state.isDefault)
     );
 
     setDefaultBrowser = set;
 });
+
+export const askToBeDefault = (/* 🥺👉👈 */) => {
+    browser.setAsDefaultBrowser();
+}
 
 cr.addWebUiListener(
     'browser-default-state-changed',
