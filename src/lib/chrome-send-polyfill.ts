@@ -106,6 +106,7 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         } else {
             prefs[name] = new_val;
             cr.webUIResponse(id, true, null);
+            cr.webUIListenerCallback('helium-prefs-changed', {...prefs});
         }
     } else if (msg === 'getSearchEnginesList') {
         if (params && params[0]) {
@@ -120,12 +121,14 @@ const _send_polyfill = (msg: string, params?: any[]) => {
             nextDefaultEngine.default = true;
             nextDefaultEngine.displayName = `${nextDefaultEngine.name} (Default)`;
         }
+        cr.webUIListenerCallback('search-engines-changed', structuredClone(searchEngines));
     } else if (msg === 'requestDefaultBrowserState') {
         if (params && params[0]) {
             cr.webUIResponse(params[0], true, defaultBrowser);
         }
     } else if (msg === 'setAsDefaultBrowser') {
         defaultBrowser.isDefault = true;
+        cr.webUIListenerCallback('browser-default-state-changed', structuredClone(defaultBrowser));
     } else if (params?.[0]) {
         cr.webUIResponse(params[0], false, 'unknown method');
     }
