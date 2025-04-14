@@ -1,10 +1,12 @@
 import * as cr from "./cr";
 
 export type Preferences = {
+    'completed_onboarding': boolean,
     'services.bangs': boolean,
     'services.enabled': boolean,
     'services.ext_proxy': boolean,
     'services.origin_override': string,
+    'services.user_consented': boolean,
     'services.spellcheck_files': boolean,
 };
 

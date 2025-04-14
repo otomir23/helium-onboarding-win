@@ -15,11 +15,12 @@ if (!('chrome' in globalThis)) {
 }
 
 const prefs: Record<string, unknown> = {
-    completed_onboarding: false,
+    'completed_onboarding': false,
     'services.bangs': true,
     'services.enabled': true,
     'services.ext_proxy': true,
     'services.origin_override': '',
+    'services.user_consented': false,
     'services.spellcheck_files': true,
 };
 
