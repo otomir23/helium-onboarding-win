@@ -1,12 +1,12 @@
 <script lang="ts">
     import { setPref } from "../lib/browser";
-    import type { Preferences } from "../lib/browser";
+    import { preferences, type Preferences } from "../lib/browser";
 
     export let title: string;
     export let desc: string;
     export let prefName: keyof Preferences;
 
-    export let enabled: boolean;
+    let enabled = !!$preferences[prefName];
     export let inactive: boolean = false;
 </script>
 
