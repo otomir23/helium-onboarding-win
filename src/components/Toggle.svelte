@@ -2,12 +2,15 @@
     import { setPref } from "../lib/browser";
     import { preferences, type Preferences } from "../lib/browser";
 
-    export let title: string;
-    export let desc: string;
-    export let prefName: keyof Preferences;
+    type Props = {
+        title: string;
+        desc: string;
+        prefName: keyof Preferences,
+        inactive: boolean
+    };
 
-    let enabled = !!$preferences[prefName];
-    export let inactive: boolean = false;
+    let { title, desc, prefName, inactive }: Props = $props();
+    let enabled = $derived(!!$preferences[prefName]);
 </script>
 
 <button
