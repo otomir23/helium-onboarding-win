@@ -1,4 +1,4 @@
-import * as cr from "./cr";
+import * as cr from "../cr";
 
 export type Preferences = {
     'completed_onboarding': boolean,
