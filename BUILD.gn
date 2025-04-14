@@ -21,7 +21,7 @@ action("build") {
         "svelte.config.js",
     ]
 
-    outputs = [ "$dist_dir" ]
+    outputs = [ "$dist_dir/index.html" ]
 }
 
 action("grit") {
@@ -38,7 +38,7 @@ action("grit") {
 
     inputs = [
         node_script,
-        "$dist_dir"
+        "$dist_dir/index.html"
     ]
 
     outputs = [ "$target_gen_dir/resources.grd" ]
