@@ -1,11 +1,23 @@
 <script lang="ts">
     import { s } from "../lib/strings";
+    import { setPref } from "../lib/browser";
     import { nextPage, previousPage, currentPage } from "../lib/onboarding-flow";
 
     import IconArrowLeft from "../icons/tabler/IconArrowLeft.svelte";
     import IconArrowRight from "../icons/tabler/IconArrowRight.svelte";
 
-    const visible = $derived($currentPage !== "Welcome" && $currentPage !== "Finish");
+    const visible = $derived(
+        $currentPage !== "Welcome" && $currentPage !== "Finish"
+    );
+
+    const next = () => {
+        // if the user pressed "next" on the HeliumServices page,
+        // then we mark consent (having seen the page) as true
+        if ($currentPage === "HeliumServices") {
+            setPref("services.user_consented", true);
+        }
+        nextPage();
+    }
 </script>
 
 <div id="setup-buttons" class:visible>
@@ -13,7 +25,7 @@
         <IconArrowLeft />
         {s.button.back}
     </button>
-    <button class="primary" onclick={nextPage}>
+    <button class="primary" onclick={next}>
         <IconArrowRight />
         {s.button.next}
     </button>
