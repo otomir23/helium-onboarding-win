@@ -16,11 +16,11 @@ if (!('chrome' in globalThis)) {
 
 const prefs: Record<string, unknown> = {
     completed_onboarding: false,
-    'services.bangs': false,
-    'services.enabled': false,
-    'services.ext_proxy': false,
+    'services.bangs': true,
+    'services.enabled': true,
+    'services.ext_proxy': true,
     'services.origin_override': '',
-    'services.spellcheck_files': false
+    'services.spellcheck_files': true,
 };
 
 const _send_polyfill = (msg: string, params?: any[]) => {
