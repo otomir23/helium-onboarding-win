@@ -25,6 +25,8 @@ const prefs: Record<string, unknown> = {
 };
 
 const _send_polyfill = (msg: string, params?: any[]) => {
+    console.log(msg, params);
+
     if (msg === 'getPrefs') {
         if (params && params[0]) {
             cr.webUIResponse(params[0], true, { ...prefs });
