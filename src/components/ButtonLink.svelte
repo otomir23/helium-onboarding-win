@@ -4,10 +4,12 @@
     export let title: string;
     export let desc: string;
     export let dest: string;
+    export let inactive: boolean = false;
 </script>
 
 <a
     class="button big button-link"
+    class:inactive
     href={dest}
     target="_blank"
     rel="noopener noreferrer"

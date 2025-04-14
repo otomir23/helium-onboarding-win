@@ -1,11 +1,13 @@
 <script lang="ts">
     export let title: string;
     export let desc: string;
-    export let enabled: boolean = false;
+    export let enabled: boolean;
+    export let inactive: boolean = false;
 </script>
 
 <button
     class="big"
+    class:inactive
     onclick={() => {
         enabled = !enabled;
     }}

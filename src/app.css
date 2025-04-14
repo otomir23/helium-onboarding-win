@@ -97,7 +97,7 @@ button, .button {
     padding: 11px 18px;
     border-radius: 12px;
 
-    transition: 0.1s background-color, 0.2s transform;
+    transition: 0.1s background-color, 0.2s transform, 0.2s opacity;
     will-change: transform;
 
     display: flex;
@@ -139,6 +139,11 @@ button, .button {
                 transform: scale(0.995);
             }
         }
+    }
+
+    &.inactive {
+        pointer-events: none;
+        opacity: 0.5;
     }
 
     & svg {
