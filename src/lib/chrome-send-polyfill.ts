@@ -1,4 +1,5 @@
 import * as cr from './cr';
+import type { DefaultBrowserInfo } from './cr/default_browser_browser_proxy';
 import type { SearchEngine, SearchEnginesInfo } from './cr/search_engines_browser_proxy';
 
 let chrome: Record<string, Function> = {};
@@ -78,6 +79,13 @@ for (const [ name, id, keyword, modelId, isDefault ] of actualDefaults) {
     searchEngines.defaults.push(engine);
 }
 
+const defaultBrowser: DefaultBrowserInfo = {
+    canBeDefault: true,
+    isDefault: false,
+    isDisabledByPolicy: false,
+    isUnknownError: false,
+};
+
 const _send_polyfill = (msg: string, params?: any[]) => {
     console.log(msg, params);
 
@@ -112,6 +120,12 @@ const _send_polyfill = (msg: string, params?: any[]) => {
             nextDefaultEngine.default = true;
             nextDefaultEngine.displayName = `${nextDefaultEngine.name} (Default)`;
         }
+    } else if (msg === 'requestDefaultBrowserState') {
+        if (params && params[0]) {
+            cr.webUIResponse(params[0], true, defaultBrowser);
+        }
+    } else if (msg === 'setAsDefaultBrowser') {
+        defaultBrowser.isDefault = true;
     } else if (params?.[0]) {
         cr.webUIResponse(params[0], false, 'unknown method');
     }
