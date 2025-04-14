@@ -25,8 +25,6 @@
 <style>
     #services-page {
         justify-content: flex-start;
-        margin-top: 64px;
-
         visibility: hidden;
 
         &.visible {

@@ -16,6 +16,7 @@
     .page-header {
         display: flex;
         flex-direction: column;
+        margin-top: 64px;
         gap: 10px;
 
         & p {
