@@ -1,6 +1,11 @@
 <script lang="ts">
+    import { setPref } from "../lib/browser";
+    import type { Preferences } from "../lib/browser";
+
     export let title: string;
     export let desc: string;
+    export let prefName: keyof Preferences;
+
     export let enabled: boolean;
     export let inactive: boolean = false;
 </script>
@@ -10,6 +15,7 @@
     class:inactive
     onclick={() => {
         enabled = !enabled;
+        setPref(prefName, enabled);
     }}
 >
     <div class="toggle-text">

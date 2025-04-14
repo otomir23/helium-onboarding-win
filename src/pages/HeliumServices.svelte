@@ -1,6 +1,7 @@
 <script lang="ts">
     import { s } from "../lib/strings";
     import { currentPage } from "../lib/onboarding-flow";
+    import { getPrefs, type Preferences } from "../lib/browser";
 
     import Toggle from "../components/Toggle.svelte";
     import HeliumLogo from "../icons/HeliumLogo.svelte";
@@ -8,11 +9,14 @@
     import PageHeader from "../components/PageHeader.svelte";
     import ToggleSeparator from "../components/ToggleSeparator.svelte";
 
-    const services = $state({
-        enabled: true,
-        bangs: true,
-        ext_proxy: true,
-    });
+    // pr - preferences, shortened for convenience
+    let pr = $state({}) as Preferences;
+
+    getPrefs()
+        .then((prefs) => {
+            pr = { ...prefs };
+        })
+        .catch(() => {});
 
     const visible = $derived($currentPage === "HeliumServices");
 </script>
@@ -28,25 +32,28 @@
             <Toggle
                 title={s.services.connection_title}
                 desc={s.services.connection_desc}
-                bind:enabled={services.enabled}
+                prefName={"services.enabled"}
+                bind:enabled={pr["services.enabled"]}
             />
             <ToggleSeparator />
             <Toggle
                 title={s.services.bangs_title}
                 desc={s.services.bangs_desc}
-                bind:enabled={services.bangs}
-                inactive={!services.enabled}
+                prefName={"services.bangs"}
+                bind:enabled={pr["services.bangs"]}
+                inactive={!pr["services.enabled"]}
             />
             <Toggle
                 title={s.services.proxy_title}
                 desc={s.services.proxy_desc}
-                bind:enabled={services.ext_proxy}
-                inactive={!services.enabled}
+                prefName={"services.ext_proxy"}
+                bind:enabled={pr["services.ext_proxy"]}
+                inactive={!pr["services.enabled"]}
             />
             <ButtonLink
                 title={s.services.instance_title}
                 desc={s.services.instance_desc}
-                inactive={!services.enabled}
+                inactive={!pr["services.enabled"]}
                 dest="chrome://settings/privacy/services"
             />
         </div>
