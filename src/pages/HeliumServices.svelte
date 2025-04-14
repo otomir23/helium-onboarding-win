@@ -8,6 +8,12 @@
     import PageHeader from "../components/PageHeader.svelte";
     import ToggleSeparator from "../components/ToggleSeparator.svelte";
 
+    const services = $state({
+        enabled: true,
+        bangs: true,
+        ext_proxy: true,
+    });
+
     const visible = $derived($currentPage === "HeliumServices");
 </script>
 
@@ -22,19 +28,25 @@
             <Toggle
                 title={s.services.connection_title}
                 desc={s.services.connection_desc}
+                bind:enabled={services.enabled}
             />
             <ToggleSeparator />
             <Toggle
                 title={s.services.bangs_title}
                 desc={s.services.bangs_desc}
+                bind:enabled={services.bangs}
+                inactive={!services.enabled}
             />
             <Toggle
                 title={s.services.proxy_title}
                 desc={s.services.proxy_desc}
+                bind:enabled={services.ext_proxy}
+                inactive={!services.enabled}
             />
             <ButtonLink
                 title={s.services.instance_title}
                 desc={s.services.instance_desc}
+                inactive={!services.enabled}
                 dest="chrome://settings/privacy/services"
             />
         </div>
