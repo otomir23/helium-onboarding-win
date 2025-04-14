@@ -1,4 +1,5 @@
 import * as cr from './cr';
+import type { SearchEngine, SearchEnginesInfo } from './cr/search_engines_browser_proxy';
 
 let chrome: Record<string, Function> = {};
 
@@ -24,6 +25,59 @@ const prefs: Record<string, unknown> = {
     'services.spellcheck_files': true,
 };
 
+const searchEngineTemplate: SearchEngine = {
+    canBeActivated: false,
+    canBeDeactivated: false,
+    canBeDefault: true,
+    canBeEdited: true,
+    canBeRemoved: true,
+    default: false,
+    displayName: '',
+    iconPath: 'chrome://theme/IDR_DUMMY_ICON_DOT_COM@2x',
+    iconURL: "https://dummy.invalid/favicon.ico",
+    id: -1,
+    isManaged: false,
+    isOmniboxExtension: false,
+    isPrepopulated: true,
+    isStarterPack: false,
+    keyword: 'domain.com',
+    modelIndex: -1,
+    name: 'Search',
+    shouldConfirmDeletion: true,
+    url: 'https://dummy.invalid/suggest?q=%s',
+    urlLocked: true
+};
+
+const searchEngines: SearchEnginesInfo = {
+    actives: [],
+    defaults: [],
+    extensions: [],
+    others: []
+};
+
+let currentDefault = 4;
+
+const actualDefaults: [string, number, string, number, boolean][] = [
+    ["Microsoft Bing", 2, "bing.com", 0, false],
+    ["Ecosia", 3, "ecosia.org", 1, false],
+    ["Qwant", 4, "qwant.com", 2, false],
+    ["Google", 5, "google.com", 3, false],
+    ["DuckDuckGo", 6, "duckduckgo.com", 4, true],
+    ["Kagi", 7, "kagi.com", 5, false]
+];
+
+for (const [ name, id, keyword, modelId, isDefault ] of actualDefaults) {
+    const engine = structuredClone(searchEngineTemplate);
+    engine.name = name;
+    engine.displayName = name;
+    if (isDefault) engine.displayName += ` (Default)`;
+    engine.id = id;
+    engine.modelIndex = modelId;
+    engine.keyword = keyword;
+    engine.default = isDefault;
+    searchEngines.defaults.push(engine);
+}
+
 const _send_polyfill = (msg: string, params?: any[]) => {
     console.log(msg, params);
 
@@ -44,6 +98,19 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         } else {
             prefs[name] = new_val;
             cr.webUIResponse(id, true, null);
+        }
+    } else if (msg === 'getSearchEnginesList') {
+        if (params && params[0]) {
+            cr.webUIResponse(params[0], true, searchEngines);
+        }
+    } else if (msg === 'setDefaultSearchEngine') {
+        const currentDefaultEngine = searchEngines.defaults[currentDefault];
+        currentDefaultEngine.displayName = currentDefaultEngine.name;
+        currentDefaultEngine.default = false;
+        if (params && params[0]) {
+            const nextDefaultEngine = searchEngines.defaults[params[0]];
+            nextDefaultEngine.default = true;
+            nextDefaultEngine.displayName = `${nextDefaultEngine.name} (Default)`;
         }
     } else if (params?.[0]) {
         cr.webUIResponse(params[0], false, 'unknown method');
