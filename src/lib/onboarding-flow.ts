@@ -1,4 +1,4 @@
-import { derived, writable, type Updater } from "svelte/store";
+import { derived, readable, type Updater } from "svelte/store";
 
 export const flow = [
     "Welcome",
@@ -9,7 +9,7 @@ export const flow = [
 
 let update: (_: Updater<number>) => void;
 
-const index = writable(
+const index = readable(
     0,
     (_, _update) => { update = _update }
 );
@@ -27,8 +27,8 @@ export const nextPage = () => {
 
 export const previousPage = () => {
     update((current) => {
-        if (current >= 1) {
-            return --current;
+        if (current) {
+            --current;
         }
         return current;
     })
