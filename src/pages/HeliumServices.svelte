@@ -1,7 +1,7 @@
 <script lang="ts">
     import { s } from "../lib/strings";
     import { currentPage } from "../lib/onboarding-flow";
-    import { getPrefs, type Preferences } from "../lib/browser";
+    import { preferences } from "../lib/browser";
 
     import Toggle from "../components/Toggle.svelte";
     import HeliumLogo from "../icons/HeliumLogo.svelte";
@@ -10,13 +10,7 @@
     import ToggleSeparator from "../components/ToggleSeparator.svelte";
 
     // pr - preferences, shortened for convenience
-    let pr = $state({}) as Preferences;
-
-    getPrefs()
-        .then((prefs) => {
-            pr = { ...prefs };
-        })
-        .catch(() => {});
+    let pr = $derived($preferences);
 
     const visible = $derived($currentPage === "HeliumServices");
 </script>
