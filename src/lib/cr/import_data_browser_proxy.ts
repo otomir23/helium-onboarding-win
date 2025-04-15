@@ -32,6 +32,15 @@ export enum ImportDataStatus {
   FAILED = 'failed',
 }
 
+export type WhatToImport = {
+  import_dialog_autofill_form_data: boolean,
+  import_dialog_bookmarks: boolean,
+  import_dialog_history: boolean,
+  import_dialog_saved_passwords: boolean,
+  import_dialog_search_engine: boolean,
+  import_dialog_extensions: boolean
+};
+
 export interface ImportDataBrowserProxy {
   /**
    * Returns the source profiles available for importing from other browsers.
@@ -45,7 +54,7 @@ export interface ImportDataBrowserProxy {
    */
   importData(
       sourceBrowserProfileIndex: number,
-      types: {[type: string]: boolean}): void;
+      types: WhatToImport): void;
 
   /**
    * Prompts the user to choose a bookmarks file to import bookmarks from.
