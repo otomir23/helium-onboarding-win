@@ -88,6 +88,58 @@ const defaultBrowser: DefaultBrowserInfo = {
 
 let profileName = 'Work';
 
+let importerListLoaded = false;
+
+const ff_has = new Set(["autofillFormData", "favorites", "history"]);
+const chrome_has = new Set(["extensions", "history", "passwords"]);
+const chrome_has_favs = new Set([...chrome_has, "favorites"]);
+const safari_has = new Set(["favorites"]);
+
+const importerListSimple = [
+    [ "Mozilla Firefox", "default release", ff_has ],
+    [ "Google Chrome", "Your Chrome", chrome_has_favs ],
+    [ "Google Chrome Beta", "Your Chrome", chrome_has_favs ],
+    [ "Google Chrome Dev", "Your Chrome", chrome_has_favs ],
+    [ "Google Chrome Canary", "Your Chrome", chrome_has_favs ],
+    [ "Chromium", "Work", chrome_has ],
+    [ "Chromium", "Play", chrome_has ],
+    [ "Vivaldi", "Work", chrome_has_favs ],
+    [ "Opera", "lalala", chrome_has_favs ],
+    [ "Yandex", "сидим пердим", chrome_has_favs ],
+    [ "NAVER Whale", "Work", chrome_has ],
+    [ "Arc", "Person 1", chrome_has ],
+    [ "Microsoft Edge", "Profile 1", chrome_has ],
+    [ "Microsoft Edge", "Bill Gates", chrome_has ],
+    [ "Brave", "Work", chrome_has_favs ],
+    [ "Brave", "Jork", chrome_has_favs ],
+    [ "Safari", "", safari_has ],
+    [ "Bookmarks HTML File", "", safari_has ]
+] as const;
+
+const importerList: cr.BrowserProfile[] = importerListSimple.map((data, index) => {
+    const [ name, profileName, features ] = data;
+    return {
+        name,
+        index,
+        profileName,
+        history: features.has('history'),
+        favorites: features.has('favorites'),
+        passwords: features.has('passwords'),
+        search: features.has('search'),
+        autofillFormData: features.has('autofillFormData'),
+        extensions: features.has('extensions')
+    };
+});
+
+const necessary_keys: (keyof cr.WhatToImport)[] = [
+    'import_dialog_autofill_form_data',
+    'import_dialog_bookmarks',
+    'import_dialog_history',
+    'import_dialog_saved_passwords',
+    'import_dialog_search_engine',
+    'import_dialog_extensions'
+];
+
 const _send_polyfill = (msg: string, params?: any[]) => {
     console.log(msg, params);
 
@@ -131,6 +183,42 @@ const _send_polyfill = (msg: string, params?: any[]) => {
     } else if (msg === 'setAsDefaultBrowser') {
         defaultBrowser.isDefault = true;
         cr.webUIListenerCallback('browser-default-state-changed', structuredClone(defaultBrowser));
+    } else if (msg === 'initializeImportDialog') {
+        importerListLoaded = true;
+        cr.webUIResponse(params![0], true, structuredClone(importerList));
+    } else if (msg === 'importData' || msg === 'importFromBookmarksFile') {
+        if (!importerListLoaded) {
+            return;
+        }
+
+        if (msg !== 'importFromBookmarksFile') {
+            const id: number = params![0];
+            const imports: cr.WhatToImport = params![1];
+
+            if (id < 0 || id > importerList.length) {
+                return cr.webUIListenerCallback(
+                    'import-data-status-changed',
+                    cr.ImportDataStatus.FAILED
+                );
+            }
+
+            if (necessary_keys.some(k => typeof imports[k] !== 'boolean')) {
+                return alert('browser crash');
+            }
+        }
+
+        setTimeout(() => {
+            cr.webUIListenerCallback('import-data-status-changed', cr.ImportDataStatus.IN_PROGRESS);
+        }, 100);
+
+        setTimeout(() => {
+            cr.webUIListenerCallback(
+                'import-data-status-changed',
+                Math.random() < 0.5
+                ? cr.ImportDataStatus.FAILED
+                : cr.ImportDataStatus.SUCCEEDED
+            );
+        }, 2000);
     } else if (params?.[0]) {
         cr.webUIResponse(params[0], false, 'unknown method');
     }
