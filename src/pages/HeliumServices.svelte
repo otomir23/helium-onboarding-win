@@ -14,13 +14,13 @@
 </script>
 
 <div id="services-page" class="onboarding-page" class:visible>
-    <div id="services-page-container">
+    <div id="services-page-container" class="scrollable-page">
         <PageHeader
             title={s.services.title}
             subtitle={s.services.subtitle}
             icon={HeliumLogo}
         />
-        <div id="content">
+        <div id="content" class="page-content">
             <Toggle
                 title={s.services.connection_title}
                 desc={s.services.connection_desc}
@@ -65,17 +65,5 @@
             animation: zoom-blur-out 0.2s;
             animation-fill-mode: forwards;
         }
-    }
-
-    #services-page-container {
-        max-width: 600px;
-    }
-
-    #content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-1);
-        margin-top: var(--gap-2);
-        align-items: center;
     }
 </style>

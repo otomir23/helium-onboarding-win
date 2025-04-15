@@ -184,6 +184,25 @@ button, .button {
     will-change: transform, filter, opacity;
 }
 
+.scrollable-page {
+    max-width: 600px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    /* 20px - accommodation for hover effects */
+    padding: 20px;
+    padding-top: 0;
+    /* 150px - accommodation for navigation buttons */
+    padding-bottom: 150px;
+    mask-image: var(--page-scroll-gradient-mask);
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-1);
+    margin-top: var(--gap-2);
+    align-items: center;
+}
 
 @keyframes main-zoom-blur-in {
     from {

@@ -24,14 +24,14 @@
 </script>
 
 <div id="search-engines-page" class="onboarding-page" class:visible>
-    <div id="search-engines-page-container">
+    <div id="search-engines-page-container" class="scrollable-page">
         <PageHeader
             title={s.search.title}
             subtitle={s.search.subtitle}
             icon={IconSearch}
         />
 
-        <div id="content">
+        <div id="content" class="page-content">
             <SearchEngineItem
                 name={topEngine}
                 desc={searchDescs[topEngine]}
@@ -63,23 +63,5 @@
             animation: zoom-blur-out 0.2s;
             animation-fill-mode: forwards;
         }
-    }
-
-    #search-engines-page-container {
-        max-width: 600px;
-        overflow-x: scroll;
-        overflow-y: visible;
-        padding: 20px;
-        padding-top: 0;
-        padding-bottom: 150px;
-        mask-image: var(--page-scroll-gradient-mask);
-    }
-
-    #content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-1);
-        margin-top: var(--gap-2);
-        align-items: center;
     }
 </style>
