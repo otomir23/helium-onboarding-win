@@ -116,7 +116,7 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         const currentDefaultEngine = searchEngines.defaults[currentDefault];
         currentDefaultEngine.displayName = currentDefaultEngine.name;
         currentDefaultEngine.default = false;
-        if (params && params[0]) {
+        if (params && params.length >= 1) {
             const modelIndex = +params[0];
             const nextDefaultEngine = searchEngines.defaults[modelIndex];
             nextDefaultEngine.default = true;
