@@ -1,13 +1,19 @@
-import { readable } from "svelte/store";
+import { derived, readable } from "svelte/store";
 import * as cr from "../cr";
 
 let setProfiles: (_: cr.BrowserProfile[]) => void;
 
 const browser = cr.ImportDataBrowserProxyImpl.getInstance();
 
-export const importableProfiles = readable<cr.BrowserProfile[]>([], (set) => {
+const importableProfilesRaw = readable<cr.BrowserProfile[]>([], (set) => {
     browser.initializeImportDialog().then(set);
     setProfiles = set;
+});
+
+export const importableProfiles = derived(importableProfilesRaw, $profiles => {
+    return $profiles.filter(p => {
+        return !p.name.toLowerCase().includes('html');
+    });
 });
 
 export type WhatToImport = Partial<{
@@ -37,19 +43,19 @@ const runNext = () => {
     const [ index, tasks, resolve, reject ] = queue.pop()!;
 
     const me = cr.addWebUiListener('import-data-status-changed', (status: cr.ImportDataStatus) => {
-        if ([cr.ImportDataStatus.FAILED, cr.ImportDataStatus.SUCCEEDED].includes(status)) {
-            cr.removeWebUiListener(me);
+        if (status === cr.ImportDataStatus.FAILED)
+            reject();
+        else if (status === cr.ImportDataStatus.SUCCEEDED)
+            resolve();
+        else
+            return;
 
-            if (status === cr.ImportDataStatus.FAILED)
-                reject();
-            else
-                resolve();
+        cr.removeWebUiListener(me);
 
-            if (queue.length) {
-                runNext();
-            } else {
-                browser.initializeImportDialog().then(setProfiles);
-            }
+        if (queue.length) {
+            runNext();
+        } else {
+            browser.initializeImportDialog().then(setProfiles);
         }
     });
 
@@ -59,15 +65,9 @@ const runNext = () => {
 export const importProfile = (index: number, tasks: WhatToImport) => {
     const wrappedTasks = convertTasks(tasks);
 
-    let _res: Action, _rej: Action;
-    const pr = new Promise<void>((resolve, reject) => {
-        _res = resolve;
-        _rej = reject;
-
-        if (queue.push([ index, wrappedTasks, _res, _rej ]) === 1) {
+    return new Promise<void>((resolve, reject) => {
+        if (queue.push([ index, wrappedTasks, resolve, reject ]) === 1) {
             runNext();
         }
     });
-
-    return pr;
 }
