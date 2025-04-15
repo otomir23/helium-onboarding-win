@@ -7,13 +7,13 @@ export const s = {
         getStarted: "Get started"
     },
     welcome: {
-        greeting: "Welcome to the lighter internet",
+        greeting: "Meet Helium",
         body: "Let's configure your browser just the way you want it.\nIf you're in a rush, you can stick to defaults with best privacy and usability.",
         defaultsNote: "If you skip the setup, Helium online services and extensions won't work.\nIf you use defaults, Helium online services will be enabled."
     },
     finish: {
-        title: "You're all set",
-        body: "Really glad you’re here. Let’s get the browsing started!"
+        title: "Welcome to Helium!",
+        body: "The setup is complete, we're really glad you're here.\nLet's get the browsing started!"
     },
     services: {
         title: "Helium online services",
@@ -28,7 +28,7 @@ export const s = {
         instance_desc: "You can host your own instance of Helium services and use it in your browser instead of the pre-hosted server. If you have one, you can set it in Helium settings."
     },
     search: {
-        title: "Pick a search engine",
+        title: "Choose a search engine",
         subtitle: "You can change it later in Settings."
     },
     searchEngines: {
