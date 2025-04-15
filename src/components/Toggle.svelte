@@ -6,7 +6,7 @@
         title: string;
         desc: string;
         prefName: keyof Preferences,
-        inactive: boolean
+        inactive?: boolean
     };
 
     let { title, desc, prefName, inactive }: Props = $props();
