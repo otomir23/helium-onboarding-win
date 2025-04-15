@@ -56,15 +56,15 @@ const searchEngines: SearchEnginesInfo = {
     others: []
 };
 
-let currentDefault = 4;
+let currentDefault = 0;
 
 const actualDefaults: [string, number, string, number, boolean][] = [
-    ["Microsoft Bing", 2, "bing.com", 0, false],
-    ["Ecosia", 3, "ecosia.org", 1, false],
-    ["Qwant", 4, "qwant.com", 2, false],
-    ["Google", 5, "google.com", 3, false],
-    ["DuckDuckGo", 6, "duckduckgo.com", 4, true],
-    ["Kagi", 7, "kagi.com", 5, false]
+    ["DuckDuckGo", 6, "duckduckgo.com", 0, true],
+    ["Kagi", 7, "kagi.com", 1, false]
+    ["Ecosia", 3, "ecosia.org", 2, false],
+    ["Qwant", 4, "qwant.com", 3, false],
+    ["Microsoft Bing", 2, "bing.com", 4, false],
+    ["Google", 5, "google.com", 5, false],
 ];
 
 for (const [ name, id, keyword, modelId, isDefault ] of actualDefaults) {
