@@ -60,7 +60,7 @@ let currentDefault = 0;
 
 const actualDefaults: [string, number, string, number, boolean][] = [
     ["DuckDuckGo", 6, "duckduckgo.com", 0, true],
-    ["Kagi", 7, "kagi.com", 1, false]
+    ["Kagi", 7, "kagi.com", 1, false],
     ["Ecosia", 3, "ecosia.org", 2, false],
     ["Qwant", 4, "qwant.com", 3, false],
     ["Microsoft Bing", 2, "bing.com", 4, false],
