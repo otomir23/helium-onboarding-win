@@ -64,7 +64,7 @@ export const importProfile = (index: number, tasks: WhatToImport) => {
         _res = resolve;
         _rej = reject;
 
-        if (queue.push([ index, wrappedTasks, _res, _rej ]) == 1) {
+        if (queue.push([ index, wrappedTasks, _res, _rej ]) === 1) {
             runNext();
         }
     });
