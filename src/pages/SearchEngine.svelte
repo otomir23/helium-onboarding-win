@@ -1,19 +1,17 @@
 <script lang="ts">
     import { s } from "../lib/strings";
     import { currentPage } from "../lib/onboarding-flow";
+    import { searchEngines } from "../lib/browser/search-engines";
 
     import PageHeader from "../components/PageHeader.svelte";
     import IconSearch from "../icons/tabler/IconSearch.svelte";
     import SearchEngineItem from "../components/SearchEngineItem.svelte";
 
-    const topEngine = "DuckDuckGo";
-    const searchEngines = ["Kagi", "Qwant", "Ecosia", "Bing", "Google"];
-
     const searchDescs: Record<string, string> = s.searchEngines;
 
     // can't use svgs for these engines cuz
     // they don't provide .svg as a usable brand resource
-    const svgExceptions = ["Bing", "Google"];
+    const svgExceptions = ["bing", "google"];
 
     const iconPath = (engine: string) => {
         const ext = svgExceptions.includes(engine) ? "png" : "svg";
@@ -32,16 +30,14 @@
         />
 
         <div id="content" class="page-content">
-            <SearchEngineItem
-                name={topEngine}
-                desc={searchDescs[topEngine]}
-                iconPath={iconPath(topEngine)}
-            />
-            {#each searchEngines as engine}
+            {#each $searchEngines as engine}
+                {@const engineKey = engine.keyword.split(".")[0]}
                 <SearchEngineItem
-                    name={engine}
-                    desc={searchDescs[engine]}
-                    iconPath={iconPath(engine)}
+                    name={engine.name}
+                    desc={searchDescs[engineKey]}
+                    iconPath={iconPath(engineKey)}
+                    modelIndex={engine.modelIndex}
+                    isDefault={engine.default}
                 />
             {/each}
         </div>

@@ -32,11 +32,11 @@ export const s = {
         subtitle: "You can change it later in Settings."
     },
     searchEngines: {
-        DuckDuckGo: "Private, doesn’t store or sell any user data. Uses results from Bing.",
-        Kagi: "Customizable, private, and friendly. Doesn’t depend on Bing. Requires a paid account.",
-        Qwant: "Private, hosted and based in Europe. Uses results from Bing.",
-        Ecosia: "Plants trees as you search. Uses results from Bing and Google. Weird privacy policy.",
-        Bing: "A search engine by Microsoft that might be overwhelming.",
-        Google: "Well, you know already. Maybe try something else for a change?"
+        duckduckgo: "Great privacy and usability. Doesn’t store or sell any user data.",
+        kagi: "Feature-rich, privacy-respecting, and very friendly. Requires a paid account. Feels different from the rest.",
+        qwant: "Based in Europe. Uses results from Bing. Sends tracking data to Microsoft.",
+        ecosia: "Plants trees for searches. Relies on Bing and Google. Sends tracking data to Microsoft and Google.",
+        bing: "An overwhelming search engine by Microsoft.",
+        google: "Well, you know already. Consider trying something else."
     }
 }

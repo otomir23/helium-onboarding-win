@@ -1,17 +1,24 @@
 <script lang="ts">
-    import { setPref } from "../lib/browser";
-    import { preferences, type Preferences } from "../lib/browser";
+    import { setDefaultEngine } from "../lib/browser";
 
     type Props = {
         name: string;
         desc: string;
         iconPath: string;
+        modelIndex: number;
+        isDefault: boolean;
     };
 
-    let { name, desc, iconPath }: Props = $props();
+    let { name, desc, iconPath, modelIndex, isDefault }: Props = $props();
 </script>
 
-<button class="big">
+<button
+    class="big"
+    class:selected={isDefault}
+    onclick={() => {
+        setDefaultEngine(modelIndex);
+    }}
+>
     <div>
         <img
             class="engine-icon"
