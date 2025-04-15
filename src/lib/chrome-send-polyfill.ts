@@ -86,6 +86,8 @@ const defaultBrowser: DefaultBrowserInfo = {
     isUnknownError: false,
 };
 
+let profileName = 'Work';
+
 const _send_polyfill = (msg: string, params?: any[]) => {
     console.log(msg, params);
 
@@ -112,6 +114,10 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         if (params && params[0]) {
             cr.webUIResponse(params[0], true, searchEngines);
         }
+    } else if (msg === 'getProfileName') {
+        cr.webUIResponse(params![0], true, profileName);
+    } else if (msg === 'setProfileName') {
+        profileName = params![0];
     } else if (msg === 'setDefaultSearchEngine') {
         const currentDefaultEngine = searchEngines.defaults[currentDefault];
         currentDefaultEngine.displayName = currentDefaultEngine.name;
