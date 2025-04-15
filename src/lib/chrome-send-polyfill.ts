@@ -92,9 +92,7 @@ const _send_polyfill = (msg: string, params?: any[]) => {
     console.log(msg, params);
 
     if (msg === 'getPrefs') {
-        if (params && params[0]) {
-            cr.webUIResponse(params[0], true, { ...prefs });
-        }
+        cr.webUIResponse(params![0], true, { ...prefs });
     } else if (msg === 'setPref') {
         const [id, name, new_val] = params! as [string, string, any];
 
@@ -111,9 +109,7 @@ const _send_polyfill = (msg: string, params?: any[]) => {
             cr.webUIListenerCallback('helium-prefs-changed', {...prefs});
         }
     } else if (msg === 'getSearchEnginesList') {
-        if (params && params[0]) {
-            cr.webUIResponse(params[0], true, searchEngines);
-        }
+        cr.webUIResponse(params![0], true, searchEngines);
     } else if (msg === 'getProfileName') {
         cr.webUIResponse(params![0], true, profileName);
     } else if (msg === 'setProfileName') {
@@ -131,9 +127,7 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         }
         cr.webUIListenerCallback('search-engines-changed', structuredClone(searchEngines));
     } else if (msg === 'requestDefaultBrowserState') {
-        if (params && params[0]) {
-            cr.webUIResponse(params[0], true, defaultBrowser);
-        }
+        cr.webUIResponse(params![0], true, defaultBrowser);
     } else if (msg === 'setAsDefaultBrowser') {
         defaultBrowser.isDefault = true;
         cr.webUIListenerCallback('browser-default-state-changed', structuredClone(defaultBrowser));
