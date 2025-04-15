@@ -117,9 +117,11 @@ const _send_polyfill = (msg: string, params?: any[]) => {
         currentDefaultEngine.displayName = currentDefaultEngine.name;
         currentDefaultEngine.default = false;
         if (params && params[0]) {
-            const nextDefaultEngine = searchEngines.defaults[params[0]];
+            const modelIndex = +params[0];
+            const nextDefaultEngine = searchEngines.defaults[modelIndex];
             nextDefaultEngine.default = true;
             nextDefaultEngine.displayName = `${nextDefaultEngine.name} (Default)`;
+            currentDefault = modelIndex;
         }
         cr.webUIListenerCallback('search-engines-changed', structuredClone(searchEngines));
     } else if (msg === 'requestDefaultBrowserState') {
