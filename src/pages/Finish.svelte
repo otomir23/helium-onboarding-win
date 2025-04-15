@@ -4,6 +4,7 @@
 
     import HeliumLogo from "../icons/HeliumLogo.svelte";
     import IconCheck from "../icons/tabler/IconCheck.svelte";
+    import IconHeart from "../icons/tabler/IconHeart.svelte";
 
     const done = async () => {
         window.open("chrome://newtab", "_self");
@@ -13,31 +14,30 @@
 </script>
 
 <div
-    id="welcome-page"
+    id="finish-page"
     class="onboarding-page"
     class:visible
 >
-    <div id="welcome-page-container">
-        <div id="welcome-top">
-            <div id="welcome-logo">
+    <div id="finish-page-container">
+        <div id="finish-top">
+            <div id="finish-logo">
                 <HeliumLogo />
+                <IconHeart />
             </div>
-            <div id="welcome-text">
+            <div id="finish-text">
                 <h1>{s.finish.title}</h1>
                 <p>{s.finish.body}</p>
             </div>
-            <div id="welcome-buttons">
-                <button class="primary" onclick={done}>
-                    <IconCheck />
-                    {s.button.getStarted}
-                </button>
-            </div>
+            <button class="primary" onclick={done}>
+                <IconCheck />
+                {s.button.getStarted}
+            </button>
         </div>
     </div>
 </div>
 
 <style>
-    #welcome-page {
+    #finish-page {
         visibility: hidden;
 
         &.visible {
@@ -52,29 +52,41 @@
         }
     }
 
-    #welcome-top,
-    #welcome-text {
+    #finish-top,
+    #finish-text {
         display: flex;
         flex-direction: column;
     }
 
-    #welcome-page-container {
+    #finish-page-container {
         max-width: 700px;
     }
 
-    #welcome-top {
+    #finish-top {
         height: 100%;
         gap: 32px;
         justify-content: center;
         align-items: center;
     }
 
-    #welcome-logo :global(svg) {
-        height: 64px;
-        width: 64px;
+    #finish-logo {
+        display: flex;
+        align-items: center;
+        gap: 18px;
     }
 
-    #welcome-text {
+    #finish-logo :global(svg) {
+        height: 64px;
+        width: 64px;
+
+        &:last-child {
+            stroke-width: 1.2px;
+            height: 76px;
+            width: 76px;
+        }
+    }
+
+    #finish-text {
         gap: 20px;
 
         & p {
@@ -82,13 +94,8 @@
         }
     }
 
-    #welcome-buttons {
-        display: flex;
-        gap: var(--gap-2);
-    }
-
     @media (prefers-reduced-transparency) or (prefers-reduced-motion) {
-        #welcome-page.visible {
+        #finish-page.visible {
             animation: none;
             opacity: 1;
         }
