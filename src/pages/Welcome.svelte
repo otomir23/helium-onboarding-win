@@ -1,7 +1,6 @@
 <script lang="ts">
-    import * as Browser from "../lib/browser";
-
     import { s } from "../lib/strings";
+    import { setPref } from "../lib/browser";
     import { currentPage, nextPage } from "../lib/onboarding-flow";
 
     import HeliumLogo from "../icons/HeliumLogo.svelte";
@@ -9,8 +8,8 @@
     import IconArrowRight from "../icons/tabler/IconArrowRight.svelte";
 
     const useDefaults = async () => {
-        await Browser.setPref('services.user_consented', true);
-        await Browser.setPref('completed_onboarding', true);
+        await setPref('services.user_consented', true);
+        await setPref('completed_onboarding', true);
         window.open("chrome://newtab", "_self");
     }
 
