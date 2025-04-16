@@ -1,5 +1,6 @@
 <script lang="ts">
     import { s } from "../lib/strings";
+    import { setPref } from "../lib/browser";
     import { currentPage } from "../lib/onboarding-flow";
 
     import HeliumLogo from "../icons/HeliumLogo.svelte";
@@ -7,6 +8,7 @@
     import IconHeart from "../icons/tabler/IconHeart.svelte";
 
     const done = async () => {
+        await setPref('completed_onboarding', true);
         window.open("chrome://newtab", "_self");
     }
 
