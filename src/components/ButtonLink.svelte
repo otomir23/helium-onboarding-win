@@ -1,10 +1,14 @@
 <script lang="ts">
     import IconExternalLink from "../icons/tabler/IconExternalLink.svelte";
 
-    export let title: string;
-    export let desc: string;
-    export let dest: string;
-    export let inactive: boolean = false;
+    type Props = {
+        title: string;
+        desc: string;
+        dest: string;
+        inactive?: boolean;
+    };
+
+    const { title, desc, dest, inactive }: Props = $props();
 </script>
 
 <a
@@ -15,12 +19,8 @@
     rel="noopener noreferrer"
 >
     <div class="link-text">
-        <h4>
-            {title}
-        </h4>
-        <p>
-            {desc}
-        </p>
+        <h4>{title}</h4>
+        <p>{desc}</p>
     </div>
     <div class="icon">
         <IconExternalLink />
