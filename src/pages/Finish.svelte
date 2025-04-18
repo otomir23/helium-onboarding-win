@@ -45,7 +45,7 @@
         &.visible {
             visibility: visible;
             animation: zoom-blur-in 0.5s;
-            animation-delay: 0.05s;
+            animation-delay: 0.02s;
             animation-fill-mode: backwards;
         }
 
