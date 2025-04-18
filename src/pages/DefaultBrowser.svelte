@@ -7,7 +7,7 @@
 
     import IconX from "../icons/tabler/IconX.svelte";
     import IconCheck from "../icons/tabler/IconCheck.svelte";
-    import IconPlaneArrival from "../icons/tabler/IconPlaneArrival.svelte";
+    import IconWorldHeart from "../icons/tabler/IconWorldHeart.svelte";
 
     const visible = $derived($currentPage === "DefaultBrowser");
 </script>
@@ -19,7 +19,7 @@
             subtitle={s.defaultBrowser.subtitle}
             noTopMargin
             verticalTitle
-            Icon={IconPlaneArrival}
+            Icon={IconWorldHeart}
         />
         <div id="content" class="page-content">
             <DefaultBrowserOption
