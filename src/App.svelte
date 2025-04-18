@@ -7,6 +7,7 @@
     import PageNavigation from "./components/PageNavigation.svelte";
     import HeliumServices from "./pages/HeliumServices.svelte";
     import SearchEngine from "./pages/SearchEngine.svelte";
+    import DefaultBrowser from "./pages/DefaultBrowser.svelte";
     import Finish from "./pages/Finish.svelte";
 </script>
 
@@ -17,6 +18,7 @@
         <PageNavigation />
         <HeliumServices />
         <SearchEngine />
+        <DefaultBrowser />
         <Finish />
     </div>
 </main>

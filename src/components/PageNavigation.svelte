@@ -1,7 +1,7 @@
 <script lang="ts">
     import { s } from "../lib/strings";
-    import { setPref } from "../lib/browser";
-    import { nextPage, previousPage, currentPage } from "../lib/onboarding-flow";
+    import { askToBeDefault, setPref } from "../lib/browser";
+    import { nextPage, previousPage, currentPage, userChoseHeliumAsDefault } from "../lib/onboarding-flow";
 
     import IconArrowLeft from "../icons/tabler/IconArrowLeft.svelte";
     import IconArrowRight from "../icons/tabler/IconArrowRight.svelte";
@@ -15,6 +15,10 @@
         // then we mark consent (having seen the page) as true
         if ($currentPage === "HeliumServices") {
             setPref("services.user_consented", true);
+        }
+
+        if ($currentPage === "DefaultBrowser" && $userChoseHeliumAsDefault) {
+            askToBeDefault();
         }
         nextPage();
     }

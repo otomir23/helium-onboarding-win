@@ -1,9 +1,10 @@
-import { derived, readable, type Updater } from "svelte/store";
+import { derived, readable, writable, type Updater } from "svelte/store";
 
 export const flow = [
     "Welcome",
     "HeliumServices",
     "SearchEngine",
+    "DefaultBrowser",
     "Finish"
 ];
 
@@ -36,3 +37,5 @@ export const previousPage = () => {
         return current;
     })
 }
+
+export const userChoseHeliumAsDefault = writable(true);

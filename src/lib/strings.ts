@@ -38,5 +38,13 @@ export const s = {
         ecosia: "Plants trees for searches. Relies on Bing and Google. Sends tracking data to Microsoft and Google.",
         bing: "An overwhelming search engine by Microsoft.",
         google: "Well, you know already. Consider trying something else."
+    },
+    defaultBrowser: {
+        title: "Ready to make the switch?",
+        subtitle: "Make all links open in Helium by default.\nGonna feel just like home, but better.",
+        yes: "Yes",
+        no: "No",
+        yes_desc: "Make Helium my default browser.",
+        no_desc: "Just trying Helium for now."
     }
 }
