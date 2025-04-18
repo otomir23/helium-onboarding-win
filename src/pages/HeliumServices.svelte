@@ -18,7 +18,7 @@
         <PageHeader
             title={s.services.title}
             subtitle={s.services.subtitle}
-            icon={HeliumLogo}
+            Icon={HeliumLogo}
         />
         <div id="content" class="page-content">
             <Toggle

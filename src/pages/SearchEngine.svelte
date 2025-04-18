@@ -26,7 +26,7 @@
         <PageHeader
             title={s.search.title}
             subtitle={s.search.subtitle}
-            icon={IconSearch}
+            Icon={IconSearch}
         />
 
         <div id="content" class="page-content">

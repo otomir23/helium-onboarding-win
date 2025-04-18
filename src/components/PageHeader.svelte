@@ -1,12 +1,18 @@
 <script lang="ts">
-    export let title: string;
-    export let subtitle: string;
-    export let icon: ConstructorOfATypedSvelteComponent;
+    type Props = {
+        title: string;
+        subtitle: string;
+        noTopMargin?: boolean;
+        verticalTitle?: boolean;
+        Icon: ConstructorOfATypedSvelteComponent;
+    };
+
+    const { title, subtitle, noTopMargin, verticalTitle, Icon }: Props = $props();
 </script>
 
-<div class="page-header">
-    <div class="title">
-        <svelte:component this={icon} />
+<div class="page-header" class:no-top-margin={noTopMargin}>
+    <div class="title" class:vertical={verticalTitle}>
+        <Icon />
         <h2>{title}</h2>
     </div>
     <p>{subtitle}</p>
@@ -16,8 +22,12 @@
     .page-header {
         display: flex;
         flex-direction: column;
-        margin-top: 64px;
         gap: 10px;
+        margin-top: 64px;
+
+        &.no-top-margin {
+            margin-top: 0;
+        }
 
         & p {
             font-size: 18px;
@@ -32,6 +42,16 @@
             & > :global(svg) {
                 height: 28px;
                 width: 28px;
+            }
+
+            &.vertical {
+                flex-direction: column;
+
+                & > :global(svg) {
+                    height: 48px;
+                    width: 48px;
+                    stroke-width: 1.5px;
+                }
             }
         }
     }
