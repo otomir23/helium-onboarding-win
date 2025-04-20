@@ -27,6 +27,8 @@ const to_identifier = (path: string) => {
     return prefix + path.replaceAll('/', '_')
         .replaceAll('.', '_')
         .replaceAll('-', '_')
+        .replaceAll('\\', '_')
+        .replaceAll(':', '_')
         .toUpperCase();
 }
 
@@ -44,7 +46,7 @@ const generate = async () => {
     const includes: string[] = [];
 
     for await (const path of walk(dist_dir)) {
-        const relative_path = path.replace(/.*dist\//, '');
+        const relative_path = path.replace(/.*dist[\/\\]/, '').replace("\\", "/");
         includes.push(`
           <include
               name="${check(to_identifier(relative_path))}"
