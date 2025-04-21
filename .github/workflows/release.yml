@@ -7,59 +7,55 @@ on:
 
 jobs:
   make-tarball:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Compute release tag
         id: ts
-        run: echo "tag=$(date -u +%Y%m%d%H%M)" | tee -a "$GITHUB_OUTPUT"
+        run: echo "tag=$(Get-Date -UFormat +%Y%m%d%H%M)" >> $env:GITHUB_OUTPUT
       - name: Check out sources
         uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
       - name: Install packages
         run: |
-          pnpm install \
-              --frozen-lockfile \
-              --verify-store-integrity \
-              --shamefully-hoist \
+          pnpm install `
+              --frozen-lockfile `
+              --verify-store-integrity `
+              --shamefully-hoist `
               --force
       - name: Remove timestamped files and junk
         run: |
-          rm -f node_modules/.modules.yaml node_modules/.pnpm-workspace-state.json
-          rm -rf .git
+          rm -Force node_modules/.modules.yaml, node_modules/.pnpm-workspace-state.json
+          rm -Recurse -Force .git
       
       - name: Make tarball
         env:
           TAG: ${{ steps.ts.outputs.tag }}
         run: |
-            find . -print0 \
-            | sort -z \
-            | GZIP="-9n" tar -zcf "/tmp/helium-onboarding-$TAG.tar.gz" \
-                --format=posix \
-                --numeric-owner \
-                --owner=0 \
-                --group=0 \
-                --pax-option='delete=atime,delete=ctime' \
-                --mode='go+u,go-w' \
-                --preserve-permissions \
-                --mtime='1970-01-01' \
-                --no-recursion \
-                --null \
-                --files-from -
+          mkdir /Temp
+          Install-Package -Provider PowerShellGet -Scope CurrentUser -Force 7Zip4PowerShell > $null
+          Compress-7Zip `
+            -Path . `
+            -ArchiveFileName "helium-onboarding-$env:TAG.tar" `
+            -OutputPath /Temp
+          Compress-7Zip `
+            -Path /Temp/helium-onboarding-$env:TAG.tar `
+            -ArchiveFileName "helium-onboarding-$env:TAG.tar.gz" `
+            -OutputPath /Temp
       - name: Make release body
         run: |
-          cd /tmp
+          cd /Temp
           echo '```' > release.md
-          sha256sum helium*.tar.gz >> release.md
+          (Get-FileHash helium*.tar.gz).Hash.ToLower() >> release.md
           echo '```' >> release.md
       - name: Release
         uses: softprops/action-gh-release@v2
         id: release
         with:
-          body_path: /tmp/release.md
+          body_path: /Temp/release.md
           draft: false
           prerelease: true
-          files: /tmp/helium-onboarding-${{ steps.ts.outputs.tag }}.tar.gz
+          files: /Temp/helium-onboarding-${{ steps.ts.outputs.tag }}.tar.gz
           name: ${{ steps.ts.outputs.tag }}
           tag_name: ${{ steps.ts.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
