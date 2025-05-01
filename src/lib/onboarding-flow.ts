@@ -1,9 +1,11 @@
+import { SvelteSet } from "svelte/reactivity";
 import { derived, readable, writable, type Updater } from "svelte/store";
 
 export const flow = [
     "Welcome",
     "HeliumServices",
     "SearchEngine",
+    "DataImport",
     "DefaultBrowser",
     "Finish"
 ];
@@ -39,3 +41,5 @@ export const previousPage = () => {
 }
 
 export const userChoseHeliumAsDefault = writable(true);
+export const selectedProfiles = writable(new SvelteSet<number>());
+export const previouslyImportedProfiles = writable(new SvelteSet<number>());

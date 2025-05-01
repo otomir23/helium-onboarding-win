@@ -1,7 +1,15 @@
 <script lang="ts">
     import { s } from "../lib/strings";
-    import { askToBeDefault, setPref } from "../lib/browser";
-    import { nextPage, previousPage, currentPage, userChoseHeliumAsDefault } from "../lib/onboarding-flow";
+    import { SvelteSet } from "svelte/reactivity";
+    import { askToBeDefault, importProfile, setPref } from "../lib/browser";
+    import {
+        nextPage,
+        previousPage,
+        currentPage,
+        userChoseHeliumAsDefault,
+        selectedProfiles,
+        previouslyImportedProfiles,
+    } from "../lib/onboarding-flow";
 
     import IconArrowLeft from "../icons/tabler/IconArrowLeft.svelte";
     import IconArrowRight from "../icons/tabler/IconArrowRight.svelte";
@@ -11,17 +19,39 @@
     );
 
     const next = () => {
-        // if the user pressed "next" on the HeliumServices page,
-        // then we mark consent (having seen the page) as true
-        if ($currentPage === "HeliumServices") {
+        switch ($currentPage) {
+        case "HeliumServices":
+            // if the user pressed "next" on the HeliumServices page,
+            // then we mark consent (having seen the page) as true
             setPref("services.user_consented", true);
+            break;
+
+        case "DefaultBrowser":
+            if ($userChoseHeliumAsDefault) askToBeDefault();
+            break;
+
+        case "DataImport":
+            // slight delay just so the animation isn't chopped
+            setTimeout(() => {
+                $selectedProfiles.forEach((index) => {
+                    importProfile(index, {
+                        bookmarks: true,
+                        history: true,
+                        extensions: true,
+                    });
+                });
+
+                $previouslyImportedProfiles = new SvelteSet([
+                    ...$previouslyImportedProfiles,
+                    ...$selectedProfiles,
+                ]);
+                $selectedProfiles.clear();
+            }, 200);
+            break;
         }
 
-        if ($currentPage === "DefaultBrowser" && $userChoseHeliumAsDefault) {
-            askToBeDefault();
-        }
         nextPage();
-    }
+    };
 </script>
 
 <div id="setup-buttons" class:visible>
