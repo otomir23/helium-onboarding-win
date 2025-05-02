@@ -46,7 +46,7 @@
                     ...$selectedProfiles,
                 ]);
                 $selectedProfiles.clear();
-            }, 200);
+            }, 400);
             break;
         }
 
