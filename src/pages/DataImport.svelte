@@ -25,6 +25,24 @@
     const sorted = $derived(
         Object.entries(groupedProfiles).sort(([a], [b]) => a.localeCompare(b))
     );
+
+    const browserIcons = {
+        Arc: "Arc",
+        Brave: "Brave",
+        Chromium: "Chromium",
+        Opera: "Opera",
+        Safari: "Safari",
+        Vivaldi: "Vivaldi",
+        Yandex: "Yandex",
+
+        "Google Chrome": "Chrome",
+        "Google Chrome Beta": "ChromeBeta",
+        "Google Chrome Canary": "ChromeCanary",
+        "Google Chrome Dev": "ChromeDev",
+        "Microsoft Edge": "Edge",
+        "Mozilla Firefox": "Firefox",
+        "NAVER Whale": "Whale",
+    };
 </script>
 
 <div id="data-import-page" class="onboarding-page" class:visible>
@@ -37,7 +55,17 @@
         <div id="content" class="page-content">
             {#each sorted as [browser, profiles]}
                 <div class="browser-header">
-                    <IconWorld />
+                    <div class="browser-icon">
+                        {#if browser in browserIcons}
+                            {@const icon = browserIcons[browser as keyof typeof browserIcons]}
+                            <img
+                                src="/browser-icons/{icon}.png"
+                                alt="{browser} icon"
+                            />
+                        {:else}
+                            <IconWorld />
+                        {/if}
+                    </div>
                     <h4>{browser}</h4>
                 </div>
                 <div class="browser-profiles">
@@ -86,6 +114,19 @@
 
         & > :global(svg) {
             stroke-width: 1.5px;
+        }
+
+        & .browser-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & img {
+                width: 28px;
+                height: 28px;
+            }
         }
     }
 
