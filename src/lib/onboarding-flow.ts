@@ -1,5 +1,7 @@
 import { SvelteSet } from "svelte/reactivity";
-import { derived, readable, writable, type Updater } from "svelte/store";
+import { derived, get, readable, writable, type Updater } from "svelte/store";
+
+import { importableProfiles } from "./browser";
 
 export const flow = [
     "Welcome",
@@ -26,6 +28,13 @@ export const nextPage = () => {
     update((current) => {
         if (current < flow.length - 1) {
             ++current;
+
+            // skip the data import page
+            // if there's nothing to import
+            if (flow[current] === "DataImport"
+                && get(importableProfiles).length === 0) {
+                ++current;
+            }
         }
         return current;
     });
@@ -35,9 +44,16 @@ export const previousPage = () => {
     update((current) => {
         if (current) {
             --current;
+
+            // skip the data import page
+            // if there's nothing to import
+            if (flow[current] === "DataImport"
+                && get(importableProfiles).length === 0) {
+                --current;
+            }
         }
         return current;
-    })
+    });
 }
 
 export const userChoseHeliumAsDefault = writable(true);
