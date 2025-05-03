@@ -54,5 +54,5 @@ export const s = {
         history: "History",
         extensions: "Extensions"
     },
-    trademarkDisclaimer: "All product names, logos, and brands are property of their respective owners. All company, product and service names used on this page are for identification purposes only. Use of these names, logos, and brands does not imply endorsement."
+    trademarkDisclaimer: "All product names, logos, and brands are property of their respective owners.\n They are used on this page for identification purposes only. No endorsement is implied."
 }
