@@ -3,9 +3,14 @@ import * as cr from "../cr";
 
 const _defaultBrowser = writable(false);
 
+export let canBeDefaultBrowser = true;
+
 const browser = cr.DefaultBrowserBrowserProxyImpl.getInstance();
 browser.requestDefaultBrowserState().then(
-    state => _defaultBrowser.set(state.isDefault)
+    state => {
+        _defaultBrowser.set(state.isDefault);
+        canBeDefaultBrowser = state.canBeDefault;
+    }
 );
 
 cr.addWebUiListener(
