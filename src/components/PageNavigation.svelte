@@ -52,9 +52,15 @@
 
         nextPage();
     };
+
+    const footerNotePages = ["SearchEngine", "DataImport"];
 </script>
 
-<div id="setup-buttons" class:visible>
+<div
+    id="setup-buttons"
+    class:visible
+    class:footer-note={footerNotePages.includes($currentPage)}
+>
     <button onclick={previousPage}>
         <IconArrowLeft />
         {s.button.back}
@@ -71,12 +77,15 @@
         justify-content: center;
         width: 100%;
         left: 0;
-        bottom: 54px;
+        bottom: 48px;
         position: absolute;
         gap: var(--gap-2);
         z-index: 9;
 
         visibility: hidden;
+
+        transition: transform 0.25s;
+        will-change: transform, filter;
 
         &.visible {
             visibility: visible;
@@ -88,6 +97,10 @@
         &:not(.visible) {
             animation: zoom-blur-out 0.2s;
             animation-fill-mode: forwards;
+        }
+
+        &.footer-note {
+            transform: translateY(-5px);
         }
     }
 </style>
