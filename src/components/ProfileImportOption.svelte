@@ -68,6 +68,10 @@
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
+
+        &:not(:only-child):not(:last-child):not(:first-child) {
+            border-radius: 10px;
+        }
     }
 
     .text {
