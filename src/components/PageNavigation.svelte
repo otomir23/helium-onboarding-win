@@ -71,7 +71,7 @@
         justify-content: center;
         width: 100%;
         left: 0;
-        bottom: 48px;
+        bottom: 64px;
         position: absolute;
         gap: var(--gap-2);
         z-index: 9;
