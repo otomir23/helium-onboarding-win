@@ -69,7 +69,7 @@
             border-top-right-radius: 10px;
         }
 
-        &:not(:only-child):not(:last-child):not(:first-child) {
+        &:not(:only-child, :last-child, :first-child) {
             border-radius: 10px;
         }
     }
