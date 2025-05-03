@@ -1,7 +1,7 @@
 import { SvelteSet } from "svelte/reactivity";
 import { derived, get, readable, writable, type Updater } from "svelte/store";
 
-import { importableProfiles } from "./browser";
+import { canBeDefaultBrowser, importableProfiles, isDefaultBrowser } from "./browser";
 
 export const flow = [
     "Welcome",
@@ -10,7 +10,7 @@ export const flow = [
     "DataImport",
     "DefaultBrowser",
     "Finish"
-];
+] as const;
 
 let update: (_: Updater<number>) => void;
 
@@ -24,36 +24,30 @@ export const currentPage = derived(
     $index => flow[$index]
 );
 
-export const nextPage = () => {
-    update((current) => {
-        if (current < flow.length - 1) {
-            ++current;
+const getPageNumber = (current: number, direction = 1) => {
+    let next = current + direction;
 
-            // skip the data import page
-            // if there's nothing to import
-            if (flow[current] === "DataImport"
-                && get(importableProfiles).length === 0) {
-                ++current;
-            }
-        }
-        return current;
-    });
+    if (flow[next] === 'DataImport') {
+        // skip if nothing to import
+        if (get(importableProfiles).length === 0)
+            next += direction;
+    }
+
+    if (flow[next] === 'DefaultBrowser') {
+        // skip if we're already default (we can't undefault ourselves)
+        if (!canBeDefaultBrowser || get(isDefaultBrowser))
+            next += direction;
+    }
+
+    return Math.max(0, Math.min(next, flow.length - 1));
+}
+
+export const nextPage = () => {
+    update(getPageNumber);
 }
 
 export const previousPage = () => {
-    update((current) => {
-        if (current) {
-            --current;
-
-            // skip the data import page
-            // if there's nothing to import
-            if (flow[current] === "DataImport"
-                && get(importableProfiles).length === 0) {
-                --current;
-            }
-        }
-        return current;
-    });
+    update((current) => getPageNumber(current, -1));
 }
 
 export const userChoseHeliumAsDefault = writable(true);
