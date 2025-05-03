@@ -210,8 +210,6 @@ button, .button {
     max-width: 700px;
     position: absolute;
     bottom: 14px;
-    color: var(--helium-elevated);
-    white-space: pre-line;
 }
 
 @keyframes main-zoom-blur-in {

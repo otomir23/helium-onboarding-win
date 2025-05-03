@@ -42,9 +42,9 @@
             {/each}
         </div>
     </div>
-    <div id="search-engines-footer" class="trademark-disclaimer">
+    <p id="search-engines-footer" class="trademark-disclaimer">
         {s.trademarkDisclaimer}
-    </div>
+    </p>
 </div>
 
 <style>
