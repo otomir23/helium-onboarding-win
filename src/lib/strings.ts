@@ -46,5 +46,13 @@ export const s = {
         no: "No",
         yes_desc: "Make Helium my default browser.",
         no_desc: "Just trying Helium for now."
-    }
+    },
+    dataImport: {
+        title: "Take your stuff with you",
+        subtitle: "Transfer your most important bookmarks, history,\n and extensions from other browsers.",
+        bookmarks: "Bookmarks",
+        history: "History",
+        extensions: "Extensions"
+    },
+    trademarkDisclaimer: "All product names, logos, and brands are property of their respective owners.\n They are used on this page for identification purposes only. No endorsement is implied."
 }

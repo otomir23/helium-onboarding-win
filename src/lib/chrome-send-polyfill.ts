@@ -112,6 +112,7 @@ const importerListSimple = [
     [ "Microsoft Edge", "Bill Gates", chrome_has ],
     [ "Brave", "Work", chrome_has_favs ],
     [ "Brave", "Jork", chrome_has_favs ],
+    [ "Brave", "New Jork", chrome_has_favs ],
     [ "Safari", "", safari_has ],
     [ "Bookmarks HTML File", "", safari_has ]
 ] as const;

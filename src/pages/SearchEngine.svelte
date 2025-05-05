@@ -42,6 +42,9 @@
             {/each}
         </div>
     </div>
+    <p id="search-engines-footer" class="trademark-disclaimer">
+        {s.trademarkDisclaimer}
+    </p>
 </div>
 
 <style>
